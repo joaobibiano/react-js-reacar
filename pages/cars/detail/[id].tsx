@@ -9,6 +9,7 @@ import Link from "next/link";
 import { getById, getTop10, ICar } from "../../../services/data";
 import { GetStaticProps, InferGetStaticPropsType } from "next";
 import { useRouter } from "next/router";
+import Head from "next/head";
 
 type Props = {
   car: ICar;
@@ -72,8 +73,23 @@ const Detail = ({ car }: DetailProps) => {
     return <h2>Loading ...</h2>;
   }
 
+  const nameSEO = `Buy ${car.model} ${car.make} ${car.year}`;
   return (
     <div className="w-full flex justify-center bg-gray-100 min-h-screen">
+      <Head>
+        <title>{nameSEO}</title>
+        <meta name="title" content={nameSEO} />
+        <meta name="description" content={"Don't forget to check" + nameSEO} />
+
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content={nameSEO} />
+        <meta
+          property="og:description"
+          content={"Don't forget to check" + nameSEO}
+        />
+        <meta property="og:image" content={car.image} />
+      </Head>
+
       <div className="flex flex-col w-full m-4 md:w-2/3 xl:w-1/2">
         <div className="flex my-5">
           <Link href="/cars" passHref>
